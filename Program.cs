@@ -1,4 +1,7 @@
-﻿namespace Berzeker_1
+﻿// ---- C# II (Dor Ben Dor) ----
+//         Yoav Kendler
+// -----------------------------
+namespace Berzeker_1
 {
     internal class Program
     {

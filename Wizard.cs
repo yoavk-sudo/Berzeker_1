@@ -15,11 +15,12 @@ namespace Berzeker_1
             RaceOfUnit = Race.elf;
         }
 
-        public void Attack(Unit enemy, List<Unit> units)
+        public override void Attack(Unit enemy)
         {
             base.Attack(enemy);
             if (CalculateChance())
             {
+                List<Unit> units = GameLoop.Units;
                 Console.WriteLine("Wizard summoned meteors and devestated the land!");
                 foreach (var unit in units)
                 {

@@ -10,9 +10,11 @@ namespace Berzeker_1
     {
         static List<Unit> _units = new List<Unit>();
 
+        internal static List<Unit> Units { get => _units; private set => _units = value; }
+
         public static void AddToUnitList(Unit unit)
         {
-            _units.Add(unit);
+            Units.Add(unit);
         }
 
         public static void StartGame()

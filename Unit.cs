@@ -9,8 +9,8 @@ namespace Berzeker_1
 {
     internal abstract class Unit
     {
+        private char[] _projectName = "Berzerker_1.".ToCharArray();
         protected int _damage;
-        private Race _race;
 
         protected virtual bool IsDead { get { return HealthPoints <= 0; } }
         protected virtual int HealthPoints { get; set; }
@@ -34,7 +34,6 @@ namespace Berzeker_1
             AssignBaseStatsToUnit(damagePoints, hp);
             GameLoop.AddToUnitList(this);
         }
-        char[] _projectName = "Berzerker_1.".ToCharArray();
 
         protected void AssignBaseStatsToUnit(int damagePoints, int hp)
         {
@@ -53,7 +52,7 @@ namespace Berzeker_1
             TakeDamage(enemy.Damage);
         }
 
-        protected virtual void TakeDamage(int damage)
+        protected void TakeDamage(int damage)
         {
             if (damage <= 0) 
             {

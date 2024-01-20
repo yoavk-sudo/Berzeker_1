@@ -8,7 +8,7 @@ namespace Berzeker_1
 {
     internal sealed class Paladin : MeleeUnit
     {
-        public Paladin(int damagePoints, int hp) : base(damagePoints, hp)
+        public Paladin(Dice damagePoints, int hp) : base(damagePoints, hp)
         {
             AssignBaseStatsToUnit(damagePoints, hp);
             RaceOfUnit = Race.human;
@@ -33,13 +33,18 @@ namespace Berzeker_1
 
         public override void Defend(Unit enemy)
         {
-            int damage = enemy.Damage;
+            int damage = enemy.Damage.LastRollValue;
             if (damage >= HealthPoints)
             {
                 HealthPoints = 1;
                 return;
             }
             base.Defend(enemy);
+        }
+
+        protected override void WeatherEffect(Weather weather)
+        {
+            throw new NotImplementedException();
         }
     }
 }

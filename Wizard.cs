@@ -9,7 +9,8 @@ namespace Berzeker_1
     internal sealed class Wizard : MagicUnit
     {
         float _aoeChance = 0.1f;
-        public Wizard(int damagePoints, int hp) : base(damagePoints, hp)
+        
+        public Wizard(Dice damagePoints, int hp) : base(damagePoints, hp)
         {
             AssignBaseStatsToUnit(damagePoints, hp);
             RaceOfUnit = Race.elf;
@@ -27,6 +28,11 @@ namespace Berzeker_1
                     unit.Defend(this);
                 }
             }
+        }
+
+        protected override void WeatherEffect(Weather weather)
+        {
+            Damage.SetModifier(2);
         }
 
         private bool CalculateChance()

@@ -11,7 +11,7 @@ namespace Berzeker_1
         bool _hasDied = false;
         int _hpRecorder;
 
-        protected override bool IsDead { get 
+        public override bool IsDead { get 
             { 
                 if(HealthPoints <= 0 && !_hasDied)
                 {
@@ -24,11 +24,16 @@ namespace Berzeker_1
             } 
         }
 
-        public Zombie(int damagePoints, int hp) : base(damagePoints, hp)
+        public Zombie(Dice damagePoints, int hp) : base(damagePoints, hp)
         {
             AssignBaseStatsToUnit(damagePoints, hp);
             _hpRecorder = hp;
             RaceOfUnit = Race.undead;
+        }
+
+        protected override void WeatherEffect(Weather weather)
+        {
+            throw new NotImplementedException();
         }
     }
 }

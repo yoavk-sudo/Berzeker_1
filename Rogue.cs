@@ -10,21 +10,23 @@ namespace Berzeker_1
     {
         float _critChance = 0.5f;
         float _evasionChance = 0.1f;
-        public Rogue(int damagePoints, int hp) : base(damagePoints, hp)
+        public Rogue(Dice damagePoints, int hp) : base(damagePoints, hp)
         {
             RaceOfUnit = Race.human;
+            HitChance = new(1, 20, 3);
+            DefenseRating = new(1, 20, 3);
         }
 
         public override void Attack(Unit enemy)
         {
-            int tempDamage = Damage;
+            //int tempDamage = Damage;
             if (CalculateChance(_critChance))
             {
-                Damage *= 3;
+                //Damage *= 3;
                 Console.WriteLine("Rogue stabbed the enemy through the heart!");
             }
             base.Attack(enemy);
-            Damage = tempDamage;
+            //Damage = tempDamage;
         }
 
         public override void Defend(Unit enemy)
@@ -35,6 +37,11 @@ namespace Berzeker_1
                 return;
             }
             base.Defend(enemy);
+        }
+
+        protected override void WeatherEffect(Weather weather)
+        {
+            throw new NotImplementedException();
         }
 
         private bool CalculateChance(float chance)

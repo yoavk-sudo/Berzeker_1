@@ -9,7 +9,7 @@ namespace Berzeker_1
     internal sealed class Vampire : MagicUnit
     {
         float _evasionChance = 0.3f;
-        public Vampire(int damagePoints, int hp) : base(damagePoints, hp)
+        public Vampire(Dice damagePoints, int hp) : base(damagePoints, hp)
         {
             AssignBaseStatsToUnit(damagePoints, hp);
             RaceOfUnit = Race.undead;
@@ -27,6 +27,11 @@ namespace Berzeker_1
                 return;
             }
             base.Defend(enemy);
+        }
+
+        protected override void WeatherEffect(Weather weather)
+        {
+            throw new NotImplementedException();
         }
 
         private bool EvasionAttempt()

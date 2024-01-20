@@ -11,17 +11,16 @@ namespace Berzeker_1
         int _range = 1;
         const int RANGEMODIFIERAMOUNT = 3;
 
-        public override int Damage { get { return _damage + Range; } 
+        public override Dice Damage { get { return _damage; } 
             protected set 
             { 
-                if (_damage < 0) _damage = 0; 
-                else _damage = value; 
+                _damage = value;
             } 
         }
 
         protected int Range { get => _range; set { if (_range < 0) _range = 0; else _range = value; } }
 
-        public MagicUnit(int damagePoints, int hp) : base(damagePoints, hp)
+        public MagicUnit(Dice damagePoints, int hp) : base(damagePoints, hp)
         {
             AssignBaseStatsToUnit(damagePoints, hp);
         }
@@ -48,17 +47,35 @@ namespace Berzeker_1
 
         public override void Attack(Unit enemy)
         {
-            int tempDamage = Damage;
-            if (RaceOfUnit == Race.elf)  Damage *= 2;
+            int tempDamage = Damage.Roll();
+            //if (RaceOfUnit == Race.elf)  Damage.LastRollValue *= 2;
             base.Attack(enemy);
-            Damage = tempDamage;
+            //Damage = tempDamage;
         }
 
         public override void Defend(Unit enemy)
         {
-            int enemyDamage = enemy.Damage;
+            int enemyDamage = enemy.Damage.LastRollValue;
             if (_range > 1) enemyDamage--;
             TakeDamage(enemyDamage);
+        }
+
+        protected override void WeatherEffect(Weather weather)
+        {
+            switch (weather)
+            {
+                case Weather.ClearSkies:
+                    if (RaceOfUnit == Race.undead)
+                        TakeDamage(1);
+                    HitChance.ChangeModifier(+1);
+                    if(this is Wizard)
+                        Console.WriteLine();
+                    break;
+                case Weather.Cloudy:
+                if (this is not Vampire)
+                    Damage.ChangeModifier(-1);
+                break;
+            }
         }
     }
 }

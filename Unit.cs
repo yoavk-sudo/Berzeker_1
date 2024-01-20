@@ -10,46 +10,90 @@ namespace Berzeker_1
     internal abstract class Unit
     {
         private char[] _projectName = "Berzerker_1.".ToCharArray();
-        protected int _damage;
+        protected Dice _damage;
+        protected int _loot;
 
-        protected virtual bool IsDead { get { return HealthPoints <= 0; } }
+        protected int CarryingCapacity { get; set; }
+        protected int Loot { get => _loot; set => _loot = Math.Clamp(value, 0, CarryingCapacity); }
+        protected Dice HitChance { get; set; }
+        protected Dice DefenseRating { get; set; }
+        public virtual bool IsDead { get { return HealthPoints <= 0; } }
         protected virtual int HealthPoints { get; set; }
         public override string ToString()
         {
             return base.ToString().TrimStart(_projectName);
         }
-        public virtual int Damage
+        public virtual Dice Damage
         {
             get { return _damage; }
             protected set
             {
-                if (_damage < 0) _damage = 0;
-                else _damage = value;
+                _damage = value;
             }
         }
         public virtual Race RaceOfUnit { get; protected set; }
 
-        protected Unit(int damagePoints, int hp)
+        protected Unit(Dice damagePoints, int hp)
         {
             AssignBaseStatsToUnit(damagePoints, hp);
             GameLoop.AddToUnitList(this);
         }
 
-        protected void AssignBaseStatsToUnit(int damagePoints, int hp)
+        protected void AssignBaseStatsToUnit(Dice damagePoints, int hp)
         {
             Damage = damagePoints;
+            DefenseRating = damagePoints; ///////
             HealthPoints = hp;
         }
 
         public virtual void Attack(Unit enemy)
         {
-            if (IsDead || enemy.IsDead) return;
-            enemy.Defend(this);
+            if (IsDead || enemy.IsDead)
+                return;
+            int dmg = Damage.Roll();
+            if (dmg == 0) //until unit attacks again, this is their damage value
+            {
+                Console.WriteLine(this + " completely fumbled their attack!");
+                return;
+            }
+            enemy.Defend(this, dmg);
         }
 
         public virtual void Defend(Unit enemy)
         {
-            TakeDamage(enemy.Damage);
+            if (DefenseRating.Roll() >= enemy.Damage.LastRollValue)
+            {
+                Console.WriteLine(this + " succefully blocked " + enemy + "'s attack!");
+                return;
+            }
+            Console.WriteLine("Defense roll failed.");
+            EnemyLootingUnit(enemy);
+            TakeDamage(enemy.Damage.LastRollValue);
+        }
+        public virtual void Defend(Unit enemy, int dmg)
+        {
+            if (DefenseRating.Roll() >= dmg)
+            {
+                Console.WriteLine(this + " succefully blocked " + enemy + "'s attack!");
+                return;
+            }
+            Console.WriteLine("Defense roll failed.");
+            EnemyLootingUnit(enemy);
+            TakeDamage(enemy.Damage.LastRollValue);
+        }
+
+        private void EnemyLootingUnit(Unit enemy)
+        {
+            int lootStolen = 0;
+            for (int i = 0; i < enemy.Damage.LastRollValue; i++)
+            {
+                if (enemy.Loot >= enemy.CarryingCapacity || Loot == 0)
+                    break;
+                enemy.Loot++;
+                lootStolen++;
+            }
+            Loot -= lootStolen;
+            Console.WriteLine($"{this} lost {lootStolen} loot.");
         }
 
         protected void TakeDamage(int damage)
@@ -71,11 +115,21 @@ namespace Berzeker_1
             }
         }
 
+        protected abstract void WeatherEffect(Weather weather);
+
         public enum Race
         {
             elf,
             human,
             undead
+        }
+
+        public enum Weather
+        {
+            ClearSkies,
+            Cloudy,
+            Scorching,
+            Hail
         }
     }
 }

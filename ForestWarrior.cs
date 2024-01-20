@@ -8,7 +8,7 @@ namespace Berzeker_1
 {
     internal sealed class ForestWarrior : MeleeUnit
     {
-        public ForestWarrior(int damagePoints, int hp) : base(damagePoints, hp)
+        public ForestWarrior(Dice damagePoints, int hp) : base(damagePoints, hp)
         {
             RaceOfUnit = Race.elf;
         }
@@ -16,6 +16,11 @@ namespace Berzeker_1
         {
             base.Attack(enemy);
             base.Attack(enemy);
+        }
+
+        protected override void WeatherEffect(Weather weather)
+        {
+            throw new NotImplementedException();
         }
     }
 }

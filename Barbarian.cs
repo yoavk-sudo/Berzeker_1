@@ -8,22 +8,30 @@ namespace Berzeker_1
 {
     internal sealed class Barbarian : MeleeUnit
     {
-        public Barbarian(int damagePoints, int hp) : base(damagePoints, hp)
+        int _baseModifier = 0;
+        public Barbarian(Dice damagePoints, int hp) : base(damagePoints, hp)
         {
             AssignBaseStatsToUnit(damagePoints, hp);
             RaceOfUnit = Race.human;
+            Damage.SetModifier(0);
         }
 
         public override void Attack(Unit enemy)
         {
             base.Attack(enemy);
-            Damage++;
+            Damage.SetModifier(++_baseModifier);
             Console.WriteLine("Barbarian is getting angrier!");
         }
 
         public override void Defend(Unit enemy)
         {
-            TakeDamage(enemy.Damage + 1);
+            base.Defend(enemy);
+            TakeDamage(1);
+        }
+
+        protected override void WeatherEffect(Weather weather)
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -12,13 +12,11 @@ namespace Berzeker_1
         float _evasionChance = 0.1f;
         static Races.Race _race = Races.Race.human;
 
-        internal static Races.Race Race { get => _race; set => _race = value; }
-
         public Rogue(Dice damagePoints, int hp) : base(damagePoints, hp)
         {
+            AssignBaseStatsToUnit(damagePoints, hp);
+            HitChance.ChangeModifier(+1);
             RaceOfUnit = Races.Race.human;
-            HitChance = new(1, 20, 3);
-            DefenseRating = new(1, 20, 3);
         }
 
         public override void Attack(Unit enemy)

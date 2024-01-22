@@ -74,14 +74,14 @@ namespace Berzeker_1
                 return;
             }
             Console.WriteLine("Defense roll failed.");
-            EnemyLootingUnit(enemy);
+            EnemyLootingUnit(enemy, dmg);
             TakeDamage(dmg);
         }
 
-        private void EnemyLootingUnit(Unit enemy)
+        private void EnemyLootingUnit(Unit enemy, int dmg)
         {
             int lootStolen = 0;
-            for (int i = 0; i < enemy.Damage.LastRollValue; i++)
+            for (int i = 0; i < dmg; i++)
             {
                 if (enemy.Loot >= enemy.CarryingCapacity || Loot == 0)
                     break;
@@ -106,6 +106,7 @@ namespace Berzeker_1
                 Console.WriteLine("Unit is dead!");
                 if(this is Zombie)
                 {
+                    //revive if zombie has not died before
                     bool isDead = IsDead;
                 }
             }

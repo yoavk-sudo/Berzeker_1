@@ -55,7 +55,7 @@ namespace Berzeker_1
 
         public override void Defend(Unit enemy, int dmg)
         {
-            int enemyDamage = enemy.Damage.LastRollValue;
+            int enemyDamage = dmg;
             if (_range > 1) enemyDamage--;
             TakeDamage(enemyDamage);
         }

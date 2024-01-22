@@ -48,15 +48,28 @@ namespace Berzeker_1
             switch(weather)
             {
                 case Weather.Scorching:
-                    if (_element == Elements.fire) Damage.ChangeModifier(+1);
-                    break;
+                    if (_element != Elements.fire)
+                    {
+                        break;
+                    }
+                    Damage.ChangeModifier(+1);
+                    return;
                 case Weather.Hail:
-                    if (_element == Elements.ice) DefenseRating.ChangeModifier(+1);
-                    break;
+                    if (_element != Elements.ice)
+                    {
+                        break;
+                    }
+                    DefenseRating.ChangeModifier(+1);
+                    return;
                 case Weather.Cloudy:
-                    if(_element == Elements.wind) HitChance.ChangeModifier(+1);
-                    break;
+                    if (_element != Elements.wind)
+                    {
+                        break;
+                    }
+                    HitChance.ChangeModifier(+1);
+                    return;
             }
+            // weather is clear or elements mismatch
             HitChance.SetModifier(-1);
             DefenseRating.SetModifier(-1);
             Damage.SetModifier(-1);

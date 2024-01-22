@@ -5,7 +5,7 @@
         private Races.Race _race;
         private int _startingResources;
 
-        public List<Unit>? Army { get; set; }
+        public List<Unit>? Army { get; set; } = new List<Unit>();
         public int Resources { get { return CalculateNumberOfResources(); } }
 
         private int CalculateNumberOfResources()
@@ -26,7 +26,6 @@
             Name = name;
             _startingResources = resources;
             Race = race;
-            Army = new List<Unit>();
             GenerateArmy();
         }
 
@@ -59,11 +58,14 @@
                 int element = Random.Shared.Next(0, Enum.GetNames(typeof(ElementalArcher.Elements)).Length);
                 object[] elemntalConstructorParameters = {damageDie, hp, (ElementalArcher.Elements)Enum.ToObject(typeof(ElementalArcher.Elements), element) };
                 Console.WriteLine(elemntalConstructorParameters[2]);
-                Army.Add((Unit)Activator.CreateInstance(unitOfRace, elemntalConstructorParameters));
+                Unit archer = (Unit)Activator.CreateInstance(unitOfRace, elemntalConstructorParameters);
+                if (archer == null) return;
+                Army.Add(archer);
                 return;
             }
             object[] constructorParameters = { damageDie, hp };
             Unit soldier = (Unit)Activator.CreateInstance(unitOfRace, constructorParameters);
+            if (soldier == null) return;
             Army.Add(soldier);
         }
     }

@@ -11,31 +11,28 @@ namespace Berzeker_1
         private uint _scalar;
         private uint _baseDie;
         private int _modifier;
-        private int _lastRollValue;
 
         public uint Scalar { get => _scalar; set => _scalar = value; }
         public uint BaseDie { get => _baseDie; set => _baseDie = value; }
         public int Modifier { get => _modifier; set => _modifier = value; }
-        public int LastRollValue { get => _lastRollValue; set => _lastRollValue = value; }
 
         public Dice(uint numberOfDice, uint numberOfSidesPerDie, int modifier)
         {
             _scalar = numberOfDice;
             _baseDie = numberOfSidesPerDie;
             _modifier = modifier;
-            _lastRollValue = 0;
         }
 
         public int Roll()
         {
-            LastRollValue = 0;
+            int value = 0;
             for (int i = 0; i < Scalar; i++)
             {
-                LastRollValue += (Random.Shared.Next((int)BaseDie) + 1);
+                value += (Random.Shared.Next((int)BaseDie) + 1);
             }
-            LastRollValue += Modifier;
-            Console.WriteLine("Rolling...\n" + LastRollValue + "!");
-            return LastRollValue;
+            value += Modifier;
+            Console.WriteLine("Rolling...\n" + value + "!");
+            return value;
         }
 
         public override string ToString()

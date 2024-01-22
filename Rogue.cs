@@ -10,9 +10,13 @@ namespace Berzeker_1
     {
         float _critChance = 0.5f;
         float _evasionChance = 0.1f;
+        static Races.Race _race = Races.Race.human;
+
+        internal static Races.Race Race { get => _race; set => _race = value; }
+
         public Rogue(Dice damagePoints, int hp) : base(damagePoints, hp)
         {
-            RaceOfUnit = Race.human;
+            RaceOfUnit = Races.Race.human;
             HitChance = new(1, 20, 3);
             DefenseRating = new(1, 20, 3);
         }
@@ -29,14 +33,14 @@ namespace Berzeker_1
             //Damage = tempDamage;
         }
 
-        public override void Defend(Unit enemy)
+        public override void Defend(Unit enemy, int dmg)
         {
             if (CalculateChance(_evasionChance))
             {
                 Console.WriteLine("Rogue rolled out of the way!");
                 return;
             }
-            base.Defend(enemy);
+            base.Defend(enemy, dmg);
         }
 
         protected override void WeatherEffect(Weather weather)

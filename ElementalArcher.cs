@@ -14,7 +14,7 @@ namespace Berzeker_1
         private ElementalArcher(Dice damagePoints, int hp) : base(damagePoints, hp)
         {
             AssignBaseStatsToUnit(damagePoints, hp);
-            RaceOfUnit = Race.elf;
+            RaceOfUnit = Races.Race.elf;
         }
         public ElementalArcher(Dice damagePoints, int hp, Elements element) : this(damagePoints, hp)
         {
@@ -35,9 +35,9 @@ namespace Berzeker_1
 
         private bool EnemyWeakToElement(Unit enemy)
         {
-            if(enemy.RaceOfUnit == Race.undead && _element == Elements.fire) return true;
-            if(enemy.RaceOfUnit == Race.human && _element == Elements.ice) return true;
-            if(enemy.RaceOfUnit == Race.elf && _element == Elements.wind) return true;
+            if(enemy.RaceOfUnit == Races.Race.undead && _element == Elements.fire) return true;
+            if(enemy.RaceOfUnit == Races.Race.human && _element == Elements.ice) return true;
+            if(enemy.RaceOfUnit == Races.Race.elf && _element == Elements.wind) return true;
             return false;
         }
 

@@ -13,7 +13,7 @@ namespace Berzeker_1
         public Wizard(Dice damagePoints, int hp) : base(damagePoints, hp)
         {
             AssignBaseStatsToUnit(damagePoints, hp);
-            RaceOfUnit = Race.elf;
+            RaceOfUnit = Races.Race.elf;
         }
 
         public override void Attack(Unit enemy)
@@ -25,7 +25,7 @@ namespace Berzeker_1
                 Console.WriteLine("Wizard summoned meteors and devestated the land!");
                 foreach (var unit in units)
                 {
-                    unit.Defend(this);
+                    unit.Defend(this, Damage.Roll());
                 }
             }
         }

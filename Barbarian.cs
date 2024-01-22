@@ -12,8 +12,13 @@ namespace Berzeker_1
         public Barbarian(Dice damagePoints, int hp) : base(damagePoints, hp)
         {
             AssignBaseStatsToUnit(damagePoints, hp);
-            RaceOfUnit = Race.human;
+            RaceOfUnit = Races.Race.human;
             Damage.SetModifier(0);
+        }
+
+        public override string ToString()
+        {
+            return "B" + base.ToString();
         }
 
         public override void Attack(Unit enemy)
@@ -23,9 +28,9 @@ namespace Berzeker_1
             Console.WriteLine("Barbarian is getting angrier!");
         }
 
-        public override void Defend(Unit enemy)
+        public override void Defend(Unit enemy, int dmg)
         {
-            base.Defend(enemy);
+            base.Defend(enemy, dmg);
             TakeDamage(1);
         }
 

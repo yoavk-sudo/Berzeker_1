@@ -31,8 +31,9 @@ namespace Berzeker_1
             LastRollValue = 0;
             for (int i = 0; i < Scalar; i++)
             {
-                LastRollValue += (Random.Shared.Next((int)BaseDie) + 1) + Modifier;
+                LastRollValue += (Random.Shared.Next((int)BaseDie) + 1);
             }
+            LastRollValue += Modifier;
             Console.WriteLine("Rolling...\n" + LastRollValue + "!");
             return LastRollValue;
         }

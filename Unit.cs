@@ -7,14 +7,14 @@ using System.Threading.Tasks;
 
 namespace Berzeker_1
 {
-    internal abstract class Unit
+    internal abstract partial class Unit
     {
         private char[] _projectName = "Berzerker_1.".ToCharArray();
         protected Dice _damage;
         protected int _loot;
 
         protected int CarryingCapacity { get; set; }
-        protected int Loot { get => _loot; set => _loot = Math.Clamp(value, 0, CarryingCapacity); }
+        public int Loot { get => _loot; set => _loot = Math.Clamp(value, 0, CarryingCapacity); }
         protected Dice HitChance { get; set; }
         protected Dice DefenseRating { get; set; }
         public virtual bool IsDead { get { return HealthPoints <= 0; } }
@@ -31,7 +31,7 @@ namespace Berzeker_1
                 _damage = value;
             }
         }
-        public virtual Race RaceOfUnit { get; protected set; }
+        public virtual Races.Race RaceOfUnit { get; protected set; }
 
         protected Unit(Dice damagePoints, int hp)
         {
@@ -42,7 +42,9 @@ namespace Berzeker_1
         protected void AssignBaseStatsToUnit(Dice damagePoints, int hp)
         {
             Damage = damagePoints;
-            DefenseRating = damagePoints; ///////
+            DefenseRating = damagePoints;
+            HitChance = damagePoints;
+            HitChance.ChangeModifier(-(int)RaceOfUnit);
             HealthPoints = hp;
         }
 
@@ -50,6 +52,11 @@ namespace Berzeker_1
         {
             if (IsDead || enemy.IsDead)
                 return;
+            if(HitChance.Roll() <= 5)
+            {
+                Console.WriteLine(this + "missed!");
+                return;
+            }
             int dmg = Damage.Roll();
             if (dmg == 0) //until unit attacks again, this is their damage value
             {
@@ -59,17 +66,6 @@ namespace Berzeker_1
             enemy.Defend(this, dmg);
         }
 
-        public virtual void Defend(Unit enemy)
-        {
-            if (DefenseRating.Roll() >= enemy.Damage.LastRollValue)
-            {
-                Console.WriteLine(this + " succefully blocked " + enemy + "'s attack!");
-                return;
-            }
-            Console.WriteLine("Defense roll failed.");
-            EnemyLootingUnit(enemy);
-            TakeDamage(enemy.Damage.LastRollValue);
-        }
         public virtual void Defend(Unit enemy, int dmg)
         {
             if (DefenseRating.Roll() >= dmg)
@@ -79,7 +75,7 @@ namespace Berzeker_1
             }
             Console.WriteLine("Defense roll failed.");
             EnemyLootingUnit(enemy);
-            TakeDamage(enemy.Damage.LastRollValue);
+            TakeDamage(dmg);
         }
 
         private void EnemyLootingUnit(Unit enemy)
@@ -116,13 +112,6 @@ namespace Berzeker_1
         }
 
         protected abstract void WeatherEffect(Weather weather);
-
-        public enum Race
-        {
-            elf,
-            human,
-            undead
-        }
 
         public enum Weather
         {

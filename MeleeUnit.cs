@@ -16,7 +16,7 @@ namespace Berzeker_1
         public override void Attack(Unit enemy)
         {
             base.Attack(enemy);
-            if (RaceOfUnit == Race.undead)
+            if (RaceOfUnit == Races.Race.undead)
                 HealthPoints++;
         }
 
@@ -25,15 +25,15 @@ namespace Berzeker_1
             switch(weather)
             {
                 case Weather.ClearSkies:
-                    if (RaceOfUnit == Race.undead)
+                    if (RaceOfUnit == Races.Race.undead)
                         DefenseRating.ChangeModifier(-3);
                     break;
                 case Weather.Scorching:
-                    if (RaceOfUnit == Race.elf)
+                    if (RaceOfUnit == Races.Race.elf)
                         TakeDamage(1);
                     break;
                 case Weather.Hail:
-                    if (RaceOfUnit == Race.human)
+                    if (RaceOfUnit == Races.Race.human)
                         TakeDamage(1);
                     break;
                 case Weather.Cloudy:

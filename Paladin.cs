@@ -11,7 +11,7 @@ namespace Berzeker_1
         public Paladin(Dice damagePoints, int hp) : base(damagePoints, hp)
         {
             AssignBaseStatsToUnit(damagePoints, hp);
-            RaceOfUnit = Race.human;
+            RaceOfUnit = Races.Race.human;
         }
 
         public override void Attack(Unit enemy)
@@ -31,7 +31,7 @@ namespace Berzeker_1
             magicEnemy.BackOff();
         }
 
-        public override void Defend(Unit enemy)
+        public override void Defend(Unit enemy, int dmg)
         {
             int damage = enemy.Damage.LastRollValue;
             if (damage >= HealthPoints)
@@ -39,7 +39,7 @@ namespace Berzeker_1
                 HealthPoints = 1;
                 return;
             }
-            base.Defend(enemy);
+            base.Defend(enemy, dmg);
         }
 
         protected override void WeatherEffect(Weather weather)

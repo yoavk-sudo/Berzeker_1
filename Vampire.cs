@@ -9,24 +9,25 @@ namespace Berzeker_1
     internal sealed class Vampire : MagicUnit
     {
         float _evasionChance = 0.3f;
+
         public Vampire(Dice damagePoints, int hp) : base(damagePoints, hp)
         {
             AssignBaseStatsToUnit(damagePoints, hp);
-            RaceOfUnit = Race.undead;
+            RaceOfUnit = Races.Race.undead;
         }
         public override void Attack(Unit enemy)
         {
             base.Attack(enemy);
             HealthPoints++;
         }
-        public override void Defend(Unit enemy)
+        public override void Defend(Unit enemy, int dmg)
         {
             if (EvasionAttempt())
             {
                 Console.WriteLine("Vampire dematerialized, letting the attack pass through!");
                 return;
             }
-            base.Defend(enemy);
+            base.Defend(enemy, dmg);
         }
 
         protected override void WeatherEffect(Weather weather)

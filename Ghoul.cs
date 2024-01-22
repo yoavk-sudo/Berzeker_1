@@ -11,7 +11,7 @@ namespace Berzeker_1
         public Ghoul(Dice damagePoints, int hp) : base(damagePoints, hp)
         {
             AssignBaseStatsToUnit(damagePoints, hp);
-            RaceOfUnit = Race.undead;
+            RaceOfUnit = Races.Race.undead;
             //Damage = damagePoints + hp;
             HealthPoints = 1;
         }

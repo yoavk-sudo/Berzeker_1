@@ -10,7 +10,7 @@ namespace Berzeker_1
     {
         public ForestWarrior(Dice damagePoints, int hp) : base(damagePoints, hp)
         {
-            RaceOfUnit = Race.elf;
+            RaceOfUnit = Races.Race.elf;
         }
         public override void Attack(Unit enemy)
         {

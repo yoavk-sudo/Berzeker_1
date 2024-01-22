@@ -28,7 +28,7 @@ namespace Berzeker_1
         {
             AssignBaseStatsToUnit(damagePoints, hp);
             _hpRecorder = hp;
-            RaceOfUnit = Race.undead;
+            RaceOfUnit = Races.Race.undead;
         }
 
         protected override void WeatherEffect(Weather weather)

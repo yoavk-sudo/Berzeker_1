@@ -53,7 +53,7 @@ namespace Berzeker_1
             //Damage = tempDamage;
         }
 
-        public override void Defend(Unit enemy)
+        public override void Defend(Unit enemy, int dmg)
         {
             int enemyDamage = enemy.Damage.LastRollValue;
             if (_range > 1) enemyDamage--;
@@ -65,7 +65,7 @@ namespace Berzeker_1
             switch (weather)
             {
                 case Weather.ClearSkies:
-                    if (RaceOfUnit == Race.undead)
+                    if (RaceOfUnit == Races.Race.undead)
                         TakeDamage(1);
                     HitChance.ChangeModifier(+1);
                     if(this is Wizard)

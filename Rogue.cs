@@ -9,8 +9,8 @@ namespace Berzeker_1
     internal sealed class Rogue : MeleeUnit
     {
         float _critChance = 0.5f;
+        int _critDamage = 3;
         float _evasionChance = 0.1f;
-        static Races.Race _race = Races.Race.human;
 
         public Rogue(Dice damagePoints, int hp) : base(damagePoints, hp)
         {
@@ -21,14 +21,14 @@ namespace Berzeker_1
 
         public override void Attack(Unit enemy)
         {
-            //int tempDamage = Damage;
+            int tempDamage = Damage.Modifier;
             if (CalculateChance(_critChance))
             {
-                //Damage *= 3;
+                Damage.SetModifier(tempDamage * _critDamage);
                 Console.WriteLine("Rogue stabbed the enemy through the heart!");
             }
             base.Attack(enemy);
-            //Damage = tempDamage;
+            Damage.SetModifier(tempDamage);
         }
 
         public override void Defend(Unit enemy, int dmg)
@@ -39,11 +39,6 @@ namespace Berzeker_1
                 return;
             }
             base.Defend(enemy, dmg);
-        }
-
-        protected override void WeatherEffect(Weather weather)
-        {
-            throw new NotImplementedException();
         }
 
         private bool CalculateChance(float chance)

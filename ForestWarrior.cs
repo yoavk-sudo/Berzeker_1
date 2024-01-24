@@ -17,10 +17,5 @@ namespace Berzeker_1
             base.Attack(enemy);
             base.Attack(enemy);
         }
-
-        protected override void WeatherEffect(Weather weather)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

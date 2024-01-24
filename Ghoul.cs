@@ -12,13 +12,8 @@ namespace Berzeker_1
         {
             AssignBaseStatsToUnit(damagePoints, hp);
             RaceOfUnit = Races.Race.undead;
-            //Damage = damagePoints + hp;
+            Damage.SetModifier(hp);
             HealthPoints = 1;
-        }
-
-        protected override void WeatherEffect(Weather weather)
-        {
-            throw new NotImplementedException();
         }
     }
 }

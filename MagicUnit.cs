@@ -68,8 +68,6 @@ namespace Berzeker_1
                     if (RaceOfUnit == Races.Race.undead)
                         TakeDamage(1);
                     HitChance.ChangeModifier(+1);
-                    if(this is Wizard)
-                        Console.WriteLine();
                     break;
                 case Weather.Cloudy:
                 if (this is not Vampire)

@@ -31,7 +31,7 @@ namespace Berzeker_1
                 value += (Random.Shared.Next((int)BaseDie) + 1);
             }
             value += Modifier;
-            Console.WriteLine("Rolling...\n" + value + "!");
+            Console.WriteLine($"Rolling {this}...\n{value}!");
             return value;
         }
 
@@ -45,8 +45,7 @@ namespace Berzeker_1
         public override bool Equals(object? obj)
         {
             if (obj == null) return false;
-            if((obj is not Dice)) { return false; }
-            Dice enemyDie = (Dice)obj;
+            if((obj is not Dice enemyDie)) { return false; }
             return Scalar == enemyDie.Scalar &&
                 BaseDie == enemyDie.BaseDie &&
                 Modifier == enemyDie.Modifier;
@@ -58,7 +57,19 @@ namespace Berzeker_1
         /// <returns></returns>
         public override int GetHashCode()
         {
-            return (int)(Math.Pow(Scalar, Math.PI) * Math.Pow(BaseDie, 3)) + Modifier;
+            return ShiftAndWrap(Scalar,2) * ShiftAndWrap(BaseDie, 2) + Modifier.GetHashCode();
+        }
+
+        private int ShiftAndWrap(uint value, int positions)
+        {
+            positions = positions & 0x1F;
+
+            // Save the existing bit pattern, but interpret it as an unsigned integer.
+            uint number = BitConverter.ToUInt32(BitConverter.GetBytes(value), 0);
+            // Preserve the bits to be discarded.
+            uint wrapped = number >> (32 - positions);
+            // Shift and wrap the discarded bits.
+            return BitConverter.ToInt32(BitConverter.GetBytes((number << positions) | wrapped), 0);
         }
 
         /// <summary>

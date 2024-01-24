@@ -30,10 +30,5 @@ namespace Berzeker_1
             _hpRecorder = hp;
             RaceOfUnit = Races.Race.undead;
         }
-
-        protected override void WeatherEffect(Weather weather)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

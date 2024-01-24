@@ -35,6 +35,7 @@ namespace Berzeker_1
                 case Weather.Hail:
                     if (RaceOfUnit == Races.Race.human)
                         TakeDamage(1);
+                    HitChance.ChangeModifier(-1);
                     break;
                 case Weather.Cloudy:
                     if (this is Rogue)

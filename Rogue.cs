@@ -21,14 +21,16 @@ namespace Berzeker_1
 
         public override void Attack(Unit enemy)
         {
-            int tempDamage = Damage.Modifier;
             if (CalculateChance(_critChance))
             {
+                int tempDamage = Damage.Modifier;
                 Damage.SetModifier(tempDamage * _critDamage);
-                Console.WriteLine("Rogue stabbed the enemy through the heart!");
+                Console.WriteLine($"{this} is aiming for {enemy}'s heart!");
+                enemy.Defend(this, Damage.Roll());
+                Damage.SetModifier(tempDamage);
+                return;
             }
             base.Attack(enemy);
-            Damage.SetModifier(tempDamage);
         }
 
         public override void Defend(Unit enemy, int dmg)

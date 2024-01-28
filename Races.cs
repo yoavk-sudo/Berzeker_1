@@ -59,7 +59,6 @@ namespace Berzeker_1
             throw new NotImplementedException();
         }
 
-
         public enum Race
         {
             elf,

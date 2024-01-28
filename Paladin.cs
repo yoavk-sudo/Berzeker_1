@@ -33,14 +33,17 @@ namespace Berzeker_1
 
         public override void Defend(Unit enemy, int dmg)
         {
-            int damage = dmg;
-            if (damage >= HealthPoints)
+            if (dmg > HealthPoints)
+                dmg = HealthPoints - 1;
+            if (dmg == 0)
+                dmg = 1;
+            base.Defend(enemy, dmg);
+            if (HealthPoints == 1)
             {
                 HealthPoints = 1;
                 Console.WriteLine($"{this} has barely hung on with {HealthPoints} health points!");
                 return;
             }
-            base.Defend(enemy, dmg);
         }
     }
 }

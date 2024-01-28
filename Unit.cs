@@ -13,7 +13,7 @@ namespace Berzeker_1
         protected Dice _damage;
         protected int _loot;
 
-        protected int CarryingCapacity { get; set; }
+        protected int CarryingCapacity { get; set; } = 2;
         public int Loot { get => _loot; set => _loot = Math.Clamp(value, 0, CarryingCapacity); }
         protected Dice HitChance { get; set; }
         protected Dice DefenseRating { get; set; }
@@ -46,23 +46,27 @@ namespace Berzeker_1
             HitChance = damagePoints;
             HitChance.ChangeModifier(-(int)RaceOfUnit);
             HealthPoints = hp;
+            CarryingCapacity = Dice.GenerateRandomDice().Roll();
         }
 
         public virtual void Attack(Unit enemy)
         {
             if (IsDead || enemy.IsDead)
                 return;
+            Console.WriteLine(this + " is attempting to attack. Will it hit their target?");
             if(HitChance.Roll() <= 5)
             {
                 Console.WriteLine(this + "missed!");
                 return;
             }
+            Console.WriteLine(this + " managed to hit! But for how much?");
             int dmg = Damage.Roll();
             if (dmg == 0) //until unit attacks again, this is their damage value
             {
                 Console.WriteLine(this + " completely fumbled their attack!");
                 return;
             }
+            Console.WriteLine($"{this} rolled a whopping {dmg}! Will {enemy} manage to block this upcoming attack?");
             enemy.Defend(this, dmg);
         }
 
@@ -73,7 +77,7 @@ namespace Berzeker_1
                 Console.WriteLine(this + " succefully blocked " + enemy + "'s attack!");
                 return;
             }
-            Console.WriteLine("Defense roll failed.");
+            Console.WriteLine("Defense roll failed. Ouch.");
             EnemyLootingUnit(enemy, dmg);
             TakeDamage(dmg);
         }
@@ -112,7 +116,7 @@ namespace Berzeker_1
             }
         }
 
-        protected abstract void WeatherEffect(Weather weather);
+        public abstract void WeatherEffect(Weather weather);
 
         public enum Weather
         {

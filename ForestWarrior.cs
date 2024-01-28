@@ -15,6 +15,7 @@ namespace Berzeker_1
         public override void Attack(Unit enemy)
         {
             base.Attack(enemy);
+            Console.WriteLine($"{this} used hax and is attacking {enemy} once again!");
             base.Attack(enemy);
         }
     }

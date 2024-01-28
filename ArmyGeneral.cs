@@ -5,7 +5,8 @@
         private Races.Race _race;
         private int _startingResources;
 
-        public List<Unit>? Army { get; set; } = new List<Unit>();
+        public List<Unit> Army { get; set; } = new List<Unit>();
+        public List<Unit> AliveUnits { get { return Army.Where(u => !u.IsDead).ToList(); } }
         public int Resources { get { return CalculateNumberOfResources(); } }
 
         private int CalculateNumberOfResources()
@@ -34,6 +35,21 @@
             return Name;
         }
 
+        public Unit GetRandomUnit()
+        {
+            Random random = new Random();
+            int randomIndex = random.Next(AliveUnits.Count);
+            try
+            {
+                return AliveUnits[randomIndex];
+            }
+            catch (IndexOutOfRangeException)
+            {
+                Console.WriteLine("Could not generate army. Try again");
+                throw;
+            }
+        }
+
         private void GenerateArmy()
         {
             uint armySize = GameLoop.ArmySize;
@@ -41,6 +57,7 @@
             {
                 CreateUnit();
             }
+            DivvyResourcesAmongUnits();
         }
 
         private void CreateUnit()
@@ -51,22 +68,47 @@
                 Console.WriteLine("failed to create unit based on race");
                 return;
             }
-            Dice damageDie = new Dice(2,3,4);
-            int hp = 3;
+            // Don't print dice roll results and such for every unit
+            TextWriter originalConsoleOut = Console.Out;
+            Console.SetOut(TextWriter.Null);
+            Dice damageDie = Dice.GenerateRandomDice();
+            int hp = Dice.GenerateRandomDice().Roll();
             if(unitOfRace.Name == nameof(ElementalArcher))
             {
                 int element = Random.Shared.Next(0, Enum.GetNames(typeof(ElementalArcher.Elements)).Length);
                 object[] elemntalConstructorParameters = {damageDie, hp, (ElementalArcher.Elements)Enum.ToObject(typeof(ElementalArcher.Elements), element) };
-                Console.WriteLine(elemntalConstructorParameters[2]);
                 Unit archer = (Unit)Activator.CreateInstance(unitOfRace, elemntalConstructorParameters);
                 if (archer == null) return;
                 Army.Add(archer);
+                Console.SetOut(originalConsoleOut);
                 return;
             }
             object[] constructorParameters = { damageDie, hp };
             Unit soldier = (Unit)Activator.CreateInstance(unitOfRace, constructorParameters);
             if (soldier == null) return;
             Army.Add(soldier);
+            Console.SetOut(originalConsoleOut);
+        }
+
+        private void DivvyResourcesAmongUnits()
+        {
+            // make sure we are not left with numbers after the decimal point
+            //if (_startingResources / Army.Count % 1 > 0)
+            //    _startingResources = (int)MathF.Floor(_startingResources / Army.Count) * Army.Count;
+            for (int i = 0; i < Army.Count; i++)
+            {
+                Army[i].Loot = _startingResources / Army.Count;
+            }
+        }
+
+        internal void ApplyWeatherEffect(Unit.Weather currentWeather)
+        {
+            foreach (Unit soldier in AliveUnits)
+            {
+                if (soldier.IsDead)
+                    continue;
+                soldier.WeatherEffect(currentWeather);
+            }
         }
     }
 }

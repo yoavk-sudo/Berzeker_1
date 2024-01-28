@@ -19,19 +19,22 @@ namespace Berzeker_1
 
         public override void Attack(Unit enemy)
         {
-            base.Attack(enemy);
-            if (CalculateChance())
+            if (!CalculateChance())
             {
-                List<Unit> units = GameLoop.Units;
-                Console.WriteLine("Wizard summoned meteors and devestated the land!");
-                foreach (var unit in units)
-                {
-                    unit.Defend(this, Damage.Roll());
-                }
+                base.Attack(enemy);
+                return;
+            }
+            Console.WriteLine("Wizard summoned meteors and devestated the land!");
+            Console.WriteLine("Everyone on the battlefield is a target!");
+            foreach (var unit in GameLoop.Units)
+            {
+                if (unit.IsDead)
+                    continue;
+                unit.Defend(this, Damage.Roll());
             }
         }
 
-        protected override void WeatherEffect(Weather weather)
+        public override void WeatherEffect(Weather weather)
         {
             if(weather == Weather.ClearSkies)
             {

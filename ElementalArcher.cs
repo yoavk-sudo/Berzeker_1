@@ -41,7 +41,7 @@ namespace Berzeker_1
             return false;
         }
 
-        protected override void WeatherEffect(Weather weather)
+        public override void WeatherEffect(Weather weather)
         {
             HitChance.SetModifier(1);
             DefenseRating.SetModifier(1);

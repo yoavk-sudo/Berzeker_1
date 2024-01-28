@@ -60,18 +60,23 @@ namespace Berzeker_1
             TakeDamage(enemyDamage);
         }
 
-        protected override void WeatherEffect(Weather weather)
+        public override void WeatherEffect(Weather weather)
         {
             switch (weather)
             {
                 case Weather.ClearSkies:
                     if (RaceOfUnit == Races.Race.undead)
+                    {
+                        Console.WriteLine($"{this} feels the burning sunlight on their skin...");
                         TakeDamage(1);
+                    }
                     HitChance.ChangeModifier(+1);
                     break;
                 case Weather.Cloudy:
-                if (this is not Vampire)
-                    Damage.ChangeModifier(-1);
+                    if (this is not Vampire)
+                    {
+                        HitChance.ChangeModifier(-1);
+                    }
                 break;
             }
         }

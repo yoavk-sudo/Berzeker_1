@@ -99,5 +99,18 @@ namespace Berzeker_1
         {
             Scalar -= (uint)Math.Abs(amount);
         }
+
+        public static Dice GenerateRandomDice()
+        {
+            uint scalar = 4;
+            uint baseDie = 41;
+            int modifier = 3;
+            uint randomScalar = (uint)Random.Shared.Next(1, (int)scalar);
+            uint randomBaseDie = (uint)Random.Shared.Next(1, (int)baseDie);
+            int randomModifier = Random.Shared.Next(0, modifier);
+            if(Random.Shared.NextSingle() < 0.5f)
+                randomModifier *= -1;
+            return new Dice(randomScalar, randomBaseDie, randomModifier);
+        }
     }
 }

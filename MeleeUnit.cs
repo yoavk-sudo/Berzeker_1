@@ -20,26 +20,35 @@ namespace Berzeker_1
                 HealthPoints++;
         }
 
-        protected override void WeatherEffect(Weather weather)
+        public override void WeatherEffect(Weather weather)
         {
             switch(weather)
             {
                 case Weather.ClearSkies:
                     if (RaceOfUnit == Races.Race.undead)
+                    {
                         DefenseRating.ChangeModifier(-3);
+                    }
                     break;
                 case Weather.Scorching:
                     if (RaceOfUnit == Races.Race.elf)
+                    {
+                        Console.WriteLine("Elven warriors are not built for this heat...");
                         TakeDamage(1);
+                    }
                     break;
                 case Weather.Hail:
                     if (RaceOfUnit == Races.Race.human)
+                    {
+                        Console.WriteLine($"{this} is being buffeted by chunks of ice!");
                         TakeDamage(1);
-                    HitChance.ChangeModifier(-1);
+                    }
                     break;
                 case Weather.Cloudy:
                     if (this is Rogue)
+                    {
                         HitChance.ChangeModifier(+1);
+                    }
                     break;
             }
         }

@@ -63,7 +63,8 @@ namespace Berzeker_1
             }
             ChangeWeather();
             Console.WriteLine("Do you want the simulation to wait for your input between steps? (y/n)");
-            char choice = Console.ReadLine().ToCharArray()[0];
+            
+            char choice = Console.ReadKey().KeyChar;
             if(choice == 'y' || choice == 'Y')
             {
                 MainLoopLineStops(general1, general2);
@@ -123,6 +124,11 @@ namespace Berzeker_1
         {
             Unit firstUnit = general1.GetRandomUnit();
             Unit secondUnit = general2.GetRandomUnit();
+            if(firstUnit == null || secondUnit == null)
+            {
+                AreArmiesAlive(general1, general2);
+                return;
+            }
             firstUnit.Attack(secondUnit);
             return;
         }
@@ -140,6 +146,7 @@ namespace Berzeker_1
         private static void DeclareWinner(ArmyGeneral general)
         {
             Console.WriteLine($"{general} won! They now have {general.Resources} Ferrari Dino 246 GT!");
+            Environment.Exit(0);
         }
 
         private static Unit.Weather ChangeWeather()

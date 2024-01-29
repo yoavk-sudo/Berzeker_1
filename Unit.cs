@@ -42,8 +42,8 @@ namespace Berzeker_1
         protected void AssignBaseStatsToUnit(Dice damagePoints, int hp)
         {
             Damage = damagePoints;
-            DefenseRating = damagePoints;
-            HitChance = damagePoints;
+            DefenseRating = Dice.GenerateRandomDice();
+            HitChance = Dice.GenerateRandomDice();
             HitChance.ChangeModifier(-(int)RaceOfUnit);
             HealthPoints = hp;
             CarryingCapacity = Dice.GenerateRandomDice().Roll();
@@ -54,9 +54,9 @@ namespace Berzeker_1
             if (IsDead || enemy.IsDead)
                 return;
             Console.WriteLine(this + " is attempting to attack. Will it hit their target?");
-            if(HitChance.Roll() <= 5)
+            if(HitChance.Roll() < HitChance.AverageDiceRoll())
             {
-                Console.WriteLine(this + "missed!");
+                Console.WriteLine(this + " missed!");
                 return;
             }
             Console.WriteLine(this + " managed to hit! But for how much?");

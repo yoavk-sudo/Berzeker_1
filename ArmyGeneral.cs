@@ -37,6 +37,11 @@
 
         public Unit GetRandomUnit()
         {
+            if(AliveUnits.Count == 0)
+            {
+                Console.WriteLine("Units are dead");
+                return null;
+            }
             Random random = new Random();
             int randomIndex = random.Next(AliveUnits.Count);
             try
@@ -45,7 +50,7 @@
             }
             catch (IndexOutOfRangeException)
             {
-                Console.WriteLine("Could not generate army. Try again");
+                Console.WriteLine("Could not get a living unit");
                 throw;
             }
         }
@@ -92,9 +97,6 @@
 
         private void DivvyResourcesAmongUnits()
         {
-            // make sure we are not left with numbers after the decimal point
-            //if (_startingResources / Army.Count % 1 > 0)
-            //    _startingResources = (int)MathF.Floor(_startingResources / Army.Count) * Army.Count;
             for (int i = 0; i < Army.Count; i++)
             {
                 Army[i].Loot = _startingResources / Army.Count;

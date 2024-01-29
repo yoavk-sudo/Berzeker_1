@@ -112,5 +112,10 @@ namespace Berzeker_1
                 randomModifier *= -1;
             return new Dice(randomScalar, randomBaseDie, randomModifier);
         }
+
+        public int AverageDiceRoll()
+        {
+            return (int)(Scalar * BaseDie + Modifier) / 2;
+        }
     }
 }

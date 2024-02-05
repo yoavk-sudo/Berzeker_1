@@ -54,13 +54,13 @@ namespace Berzeker_1
             if (IsDead || enemy.IsDead)
                 return;
             Console.WriteLine(this + " is attempting to attack. Will it hit their target?");
-            if (HitChance.GetRandomInt(0, 0) < 0)
+            if (HitChance.GetRandomInt() < 0)
             {
                 Console.WriteLine(this + " missed!");
                 return;
             }
             Console.WriteLine(this + " managed to hit! But for how much?");
-            int dmg = Damage.GetRandomInt(0,0);
+            int dmg = Damage.GetRandomInt();
             if (dmg == 0) //until unit attacks again, this is their damage value
             {
                 Console.WriteLine(this + " completely fumbled their attack!");
@@ -72,7 +72,7 @@ namespace Berzeker_1
 
         public virtual void Defend(Unit enemy, int dmg)
         {
-            if (DefenseRating.GetRandomInt(0,0) >= dmg)
+            if (DefenseRating.GetRandomInt() >= dmg)
             {
                 Console.WriteLine(this + " succefully blocked " + enemy + "'s attack!");
                 return;

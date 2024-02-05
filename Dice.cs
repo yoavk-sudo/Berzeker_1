@@ -118,7 +118,7 @@ namespace Berzeker_1
             return (int)(Scalar * BaseDie + Modifier) / 2;
         }
 
-        public int GetRandomInt(int minValue, int maxValue)
+        public int GetRandomInt()
         {
             return Roll();
         }

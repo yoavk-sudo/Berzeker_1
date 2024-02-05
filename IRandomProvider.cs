@@ -2,6 +2,6 @@
 {
     internal interface IRandomProvider
     {
-        int GetRandomInt(int minValue, int maxValue);
+        int GetRandomInt();
     }
 }

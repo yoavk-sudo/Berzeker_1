@@ -11,12 +11,12 @@ namespace Berzeker_1
         Elements _element;
         protected override int HealthPoints { get => base.HealthPoints; set => Math.Clamp(value, 0, 10); }
 
-        private ElementalArcher(Dice damagePoints, int hp) : base(damagePoints, hp)
+        private ElementalArcher(Dice damagePoints, Dice hitChance, int hp) : base(damagePoints, hitChance, hp)
         {
-            AssignBaseStatsToUnit(damagePoints, hp);
+            AssignBaseStatsToUnit(damagePoints, hitChance, hp);
             RaceOfUnit = Races.Race.elf;
         }
-        public ElementalArcher(Dice damagePoints, int hp, Elements element) : this(damagePoints, hp)
+        public ElementalArcher(Dice damagePoints, Dice hitChance, int hp, Elements element) : this(damagePoints, hitChance, hp)
         {
             _element = element;
         }
@@ -25,10 +25,10 @@ namespace Berzeker_1
         {
             if (EnemyWeakToElement(enemy))
             {
-                Damage.AddDice(1);
+                //Damage.AddDice(1);
                 Console.WriteLine("Attack was super effective!");
                 base.Attack(enemy);
-                Damage.RemoveDice(1);
+                //Damage.RemoveDice(1);
             }
             base.Attack(enemy);
         }
@@ -43,8 +43,8 @@ namespace Berzeker_1
 
         public override void WeatherEffect(Weather weather)
         {
-            HitChance.SetModifier(1);
-            DefenseRating.SetModifier(1);
+            //HitChance.SetModifier(1);
+            //DefenseRating.SetModifier(1);
             switch(weather)
             {
                 case Weather.Scorching:
@@ -52,27 +52,27 @@ namespace Berzeker_1
                     {
                         break;
                     }
-                    Damage.ChangeModifier(+1);
+                    //Damage.ChangeModifier(+1);
                     return;
                 case Weather.Hail:
                     if (_element != Elements.ice)
                     {
                         break;
                     }
-                    DefenseRating.ChangeModifier(+1);
+                    //DefenseRating.ChangeModifier(+1);
                     return;
                 case Weather.Cloudy:
                     if (_element != Elements.wind)
                     {
                         break;
                     }
-                    HitChance.ChangeModifier(+1);
+                    //HitChance.ChangeModifier(+1);
                     return;
             }
             // weather is clear or elements mismatch
-            HitChance.SetModifier(-1);
-            DefenseRating.SetModifier(-1);
-            Damage.SetModifier(-1);
+            //HitChance.SetModifier(-1);
+            //DefenseRating.SetModifier(-1);
+            //Damage.SetModifier(-1);
         }
 
         public enum Elements

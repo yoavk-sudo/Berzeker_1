@@ -12,10 +12,10 @@ namespace Berzeker_1
         int _critDamage = 3;
         float _evasionChance = 0.1f;
 
-        public Rogue(Dice damagePoints, int hp) : base(damagePoints, hp)
+        public Rogue(Dice damagePoints, Dice hitChance, int hp) : base(damagePoints, hitChance, hp)
         {
-            AssignBaseStatsToUnit(damagePoints, hp);
-            HitChance.ChangeModifier(+1);
+            AssignBaseStatsToUnit(damagePoints, hitChance, hp);
+            //HitChance.ChangeModifier(+1);
             RaceOfUnit = Races.Race.human;
         }
 
@@ -23,11 +23,11 @@ namespace Berzeker_1
         {
             if (CalculateChance(_critChance))
             {
-                int tempDamage = Damage.Modifier;
-                Damage.SetModifier(tempDamage * _critDamage);
+                //int tempDamage = Damage.Modifier;
+                //Damage.SetModifier(tempDamage * _critDamage);
                 Console.WriteLine($"{this} is aiming for {enemy}'s heart!");
-                enemy.Defend(this, Damage.Roll());
-                Damage.SetModifier(tempDamage);
+                //enemy.Defend(this, Damage.Roll());
+                //Damage.SetModifier(tempDamage);
                 return;
             }
             base.Attack(enemy);

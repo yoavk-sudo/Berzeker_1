@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Berzeker_1
 {
-    internal struct Dice
+    internal struct Dice : IRandomProvider
     {
         private uint _scalar;
         private uint _baseDie;
@@ -116,6 +116,11 @@ namespace Berzeker_1
         public int AverageDiceRoll()
         {
             return (int)(Scalar * BaseDie + Modifier) / 2;
+        }
+
+        public int GetRandomInt(int minValue, int maxValue)
+        {
+            return Roll();
         }
     }
 }

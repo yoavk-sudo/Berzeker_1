@@ -9,11 +9,11 @@ namespace Berzeker_1
     internal sealed class Barbarian : MeleeUnit
     {
         int _baseModifier = 0;
-        public Barbarian(Dice damagePoints, int hp) : base(damagePoints, hp)
+        public Barbarian(Dice damagePoints, Dice hitChance, int hp) : base(damagePoints, hitChance, hp)
         {
-            AssignBaseStatsToUnit(damagePoints, hp);
+            AssignBaseStatsToUnit(damagePoints, hitChance, hp);
             RaceOfUnit = Races.Race.human;
-            Damage.SetModifier(0);
+            //Damage.SetModifier(0);
         }
 
         public override string ToString()
@@ -24,7 +24,7 @@ namespace Berzeker_1
         public override void Attack(Unit enemy)
         {
             base.Attack(enemy);
-            Damage.SetModifier(++_baseModifier);
+            //Damage.SetModifier(++_baseModifier);
             Console.WriteLine("Barbarian is getting angrier!");
         }
 

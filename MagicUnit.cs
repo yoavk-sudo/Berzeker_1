@@ -11,7 +11,7 @@ namespace Berzeker_1
         int _range = 1;
         const int RANGEMODIFIERAMOUNT = 3;
 
-        public override Dice Damage { get { return _damage; } 
+        public override IRandomProvider Damage { get { return _damage; } 
             protected set 
             { 
                 _damage = value;
@@ -20,9 +20,9 @@ namespace Berzeker_1
 
         protected int Range { get => _range; set { if (_range < 0) _range = 0; else _range = value; } }
 
-        public MagicUnit(Dice damagePoints, int hp) : base(damagePoints, hp)
+        public MagicUnit(Dice damagePoints, Dice hitChance, int hp) : base(damagePoints, hitChance, hp)
         {
-            AssignBaseStatsToUnit(damagePoints, hp);
+            AssignBaseStatsToUnit(damagePoints, hitChance, hp);
         }
 
         public void BackOff()
@@ -47,7 +47,7 @@ namespace Berzeker_1
 
         public override void Attack(Unit enemy)
         {
-            int tempDamage = Damage.Roll();
+            //int tempDamage = Damage.Roll();
             //if (RaceOfUnit == Race.elf)  Damage.LastRollValue *= 2;
             base.Attack(enemy);
             //Damage = tempDamage;
@@ -70,12 +70,12 @@ namespace Berzeker_1
                         Console.WriteLine($"{this} feels the burning sunlight on their skin...");
                         TakeDamage(1);
                     }
-                    HitChance.ChangeModifier(+1);
+                    //HitChance.ChangeModifier(+1);
                     break;
                 case Weather.Cloudy:
                     if (this is not Vampire)
                     {
-                        HitChance.ChangeModifier(-1);
+                        //HitChance.ChangeModifier(-1);
                     }
                 break;
             }

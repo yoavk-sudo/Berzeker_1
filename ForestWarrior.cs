@@ -8,7 +8,7 @@ namespace Berzeker_1
 {
     internal sealed class ForestWarrior : MeleeUnit
     {
-        public ForestWarrior(Dice damagePoints, int hp) : base(damagePoints, hp)
+        public ForestWarrior(Dice damagePoints, Dice hitChance, int hp) : base(damagePoints, hitChance, hp)
         {
             RaceOfUnit = Races.Race.elf;
         }

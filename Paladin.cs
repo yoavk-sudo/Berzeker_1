@@ -8,9 +8,9 @@ namespace Berzeker_1
 {
     internal sealed class Paladin : MeleeUnit
     {
-        public Paladin(Dice damagePoints, int hp) : base(damagePoints, hp)
+        public Paladin(Dice damagePoints, Dice hitChance, int hp) : base(damagePoints, hitChance, hp)
         {
-            AssignBaseStatsToUnit(damagePoints, hp);
+            AssignBaseStatsToUnit(damagePoints, hitChance, hp);
             RaceOfUnit = Races.Race.human;
         }
 

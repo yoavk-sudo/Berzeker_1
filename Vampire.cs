@@ -10,9 +10,9 @@ namespace Berzeker_1
     {
         float _evasionChance = 0.3f;
 
-        public Vampire(Dice damagePoints, int hp) : base(damagePoints, hp)
+        public Vampire(Dice damagePoints, Dice hitChance, int hp) : base(damagePoints, hitChance, hp)
         {
-            AssignBaseStatsToUnit(damagePoints, hp);
+            AssignBaseStatsToUnit(damagePoints, hitChance, hp);
             RaceOfUnit = Races.Race.undead;
         }
         public override void Attack(Unit enemy)

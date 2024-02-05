@@ -24,9 +24,9 @@ namespace Berzeker_1
             } 
         }
 
-        public Zombie(Dice damagePoints, int hp) : base(damagePoints, hp)
+        public Zombie(Dice damagePoints, Dice hitChance, int hp) : base(damagePoints, hitChance, hp)
         {
-            AssignBaseStatsToUnit(damagePoints, hp);
+            AssignBaseStatsToUnit(damagePoints, hitChance, hp);
             _hpRecorder = hp;
             RaceOfUnit = Races.Race.undead;
         }

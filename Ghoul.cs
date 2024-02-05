@@ -8,11 +8,11 @@ namespace Berzeker_1
 {
     internal class Ghoul : MagicUnit
     {
-        public Ghoul(Dice damagePoints, int hp) : base(damagePoints, hp)
+        public Ghoul(Dice damagePoints, Dice hitChance, int hp) : base(damagePoints, hitChance, hp)
         {
-            AssignBaseStatsToUnit(damagePoints, hp);
+            AssignBaseStatsToUnit(damagePoints, hitChance, hp);
             RaceOfUnit = Races.Race.undead;
-            Damage.SetModifier(hp);
+            //Damage.SetModifier(hp);
             HealthPoints = 5;
         }
     }

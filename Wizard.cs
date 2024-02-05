@@ -11,9 +11,9 @@ namespace Berzeker_1
         float _aoeChance = 0.1f;
         float _increasedAoeChance = 0.3f;
         
-        public Wizard(Dice damagePoints, int hp) : base(damagePoints, hp)
+        public Wizard(Dice damagePoints, Dice hitChance, int hp) : base(damagePoints, hitChance, hp)
         {
-            AssignBaseStatsToUnit(damagePoints, hp);
+            AssignBaseStatsToUnit(damagePoints, hitChance, hp);
             RaceOfUnit = Races.Race.elf;
         }
 
@@ -30,7 +30,7 @@ namespace Berzeker_1
             {
                 if (unit.IsDead)
                     continue;
-                unit.Defend(this, Damage.Roll());
+                //unit.Defend(this, Damage.Roll());
             }
         }
 

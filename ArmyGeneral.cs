@@ -9,6 +9,9 @@
         public List<Unit> AliveUnits { get { return Army.Where(u => !u.IsDead).ToList(); } }
         public int Resources { get { return CalculateNumberOfResources(); } }
 
+        internal Races.Race Race { get => _race; set => _race = value; }
+        public string Name { get;}
+        public int StartingResources { get => _startingResources; set => _startingResources = value; }
         private int CalculateNumberOfResources()
         {
             int amount = 0;
@@ -19,13 +22,11 @@
             return amount;
         }
 
-        internal Races.Race Race { get => _race; set => _race = value; }
-        public string Name { get;}
 
         public ArmyGeneral(string name, int resources, Races.Race race)
         {
             Name = name;
-            _startingResources = resources;
+            StartingResources = resources;
             Race = race;
             GenerateArmy();
         }
@@ -99,7 +100,7 @@
         {
             for (int i = 0; i < Army.Count; i++)
             {
-                Army[i].Loot = _startingResources / Army.Count;
+                Army[i].Loot = StartingResources / Army.Count;
             }
         }
 

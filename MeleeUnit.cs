@@ -8,10 +8,13 @@ namespace Berzeker_1
 {
     internal abstract class MeleeUnit : Unit
     {
-        protected MeleeUnit(Dice damagePoints, int hp) : base(damagePoints, hp)
+        protected MeleeUnit(Dice damagePoints, Dice hitChance, int hp) : base(damagePoints, hitChance, hp)
         {
-            AssignBaseStatsToUnit(damagePoints, hp);
+            AssignBaseStatsToUnit(damagePoints, hitChance, hp);
         }
+
+        public Dice DamagePoints { get; }
+        public int Hp { get; }
 
         public override void Attack(Unit enemy)
         {
@@ -27,7 +30,7 @@ namespace Berzeker_1
                 case Weather.ClearSkies:
                     if (RaceOfUnit == Races.Race.undead)
                     {
-                        DefenseRating.ChangeModifier(-3);
+                        //DefenseRating.ChangeModifier(-3);
                     }
                     break;
                 case Weather.Scorching:
@@ -47,7 +50,7 @@ namespace Berzeker_1
                 case Weather.Cloudy:
                     if (this is Rogue)
                     {
-                        HitChance.ChangeModifier(+1);
+                        //HitChance.ChangeModifier(+1);
                     }
                     break;
             }

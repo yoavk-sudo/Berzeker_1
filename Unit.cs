@@ -10,20 +10,20 @@ namespace Berzeker_1
     internal abstract partial class Unit
     {
         private char[] _projectName = "Berzerker_1.".ToCharArray();
-        protected Dice _damage;
+        protected IRandomProvider _damage;
         protected int _loot;
 
         protected int CarryingCapacity { get; set; } = 2;
         public int Loot { get => _loot; set => _loot = Math.Clamp(value, 0, CarryingCapacity); }
-        protected Dice HitChance { get; set; }
-        protected Dice DefenseRating { get; set; }
+        protected IRandomProvider HitChance { get; set; }
+        protected IRandomProvider DefenseRating { get; set; }
         public virtual bool IsDead { get { return HealthPoints <= 0; } }
         protected virtual int HealthPoints { get; set; }
         public override string ToString()
         {
             return base.ToString().TrimStart(_projectName);
         }
-        public virtual Dice Damage
+        public virtual IRandomProvider Damage
         {
             get { return _damage; }
             protected set
@@ -33,18 +33,18 @@ namespace Berzeker_1
         }
         public virtual Races.Race RaceOfUnit { get; protected set; }
 
-        protected Unit(Dice damagePoints, int hp)
+        protected Unit(Dice damagePoints, Dice hitChance, int hp)
         {
-            AssignBaseStatsToUnit(damagePoints, hp);
+            AssignBaseStatsToUnit(damagePoints, hitChance, hp);
             GameLoop.AddToUnitList(this);
         }
 
-        protected void AssignBaseStatsToUnit(Dice damagePoints, int hp)
+        protected void AssignBaseStatsToUnit(Dice damagePoints, Dice hitChance, int hp)
         {
             Damage = damagePoints;
             DefenseRating = Dice.GenerateRandomDice();
-            HitChance = Dice.GenerateRandomDice();
-            HitChance.ChangeModifier(-(int)RaceOfUnit);
+            HitChance = hitChance;
+            //HitChance.ChangeModifier(-(int)RaceOfUnit);
             HealthPoints = hp;
             CarryingCapacity = Dice.GenerateRandomDice().Roll();
         }
@@ -54,13 +54,13 @@ namespace Berzeker_1
             if (IsDead || enemy.IsDead)
                 return;
             Console.WriteLine(this + " is attempting to attack. Will it hit their target?");
-            if(HitChance.Roll() < HitChance.AverageDiceRoll())
+            if (HitChance.GetRandomInt(0, 0) < 0)
             {
                 Console.WriteLine(this + " missed!");
                 return;
             }
             Console.WriteLine(this + " managed to hit! But for how much?");
-            int dmg = Damage.Roll();
+            int dmg = Damage.GetRandomInt(0,0);
             if (dmg == 0) //until unit attacks again, this is their damage value
             {
                 Console.WriteLine(this + " completely fumbled their attack!");
@@ -72,7 +72,7 @@ namespace Berzeker_1
 
         public virtual void Defend(Unit enemy, int dmg)
         {
-            if (DefenseRating.Roll() >= dmg)
+            if (DefenseRating.GetRandomInt(0,0) >= dmg)
             {
                 Console.WriteLine(this + " succefully blocked " + enemy + "'s attack!");
                 return;

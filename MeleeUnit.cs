@@ -30,7 +30,7 @@ namespace Berzeker_1
                 case Weather.ClearSkies:
                     if (RaceOfUnit == Races.Race.undead)
                     {
-                        //DefenseRating.ChangeModifier(-3);
+                        DefenseRating.ChangeRandomWeights(-3);
                     }
                     break;
                 case Weather.Scorching:
@@ -50,7 +50,7 @@ namespace Berzeker_1
                 case Weather.Cloudy:
                     if (this is Rogue)
                     {
-                        //HitChance.ChangeModifier(+1);
+                        HitChance.ChangeRandomWeights(+1);
                     }
                     break;
             }

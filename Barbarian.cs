@@ -13,7 +13,6 @@ namespace Berzeker_1
         {
             AssignBaseStatsToUnit(damagePoints, hitChance, hp);
             RaceOfUnit = Races.Race.human;
-            //Damage.SetModifier(0);
         }
 
         public override string ToString()
@@ -24,7 +23,7 @@ namespace Berzeker_1
         public override void Attack(Unit enemy)
         {
             base.Attack(enemy);
-            //Damage.SetModifier(++_baseModifier);
+            Damage.ChangeRandomWeights(++_baseModifier);
             Console.WriteLine("Barbarian is getting angrier!");
         }
 

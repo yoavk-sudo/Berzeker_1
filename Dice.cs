@@ -122,5 +122,15 @@ namespace Berzeker_1
         {
             return Roll();
         }
+
+        public void ChangeRandomWeights(int weight)
+        {
+            ChangeModifier(weight);
+        }
+
+        public int GetAverageRandom()
+        {
+            return AverageDiceRoll();
+        }
     }
 }

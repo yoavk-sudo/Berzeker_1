@@ -44,7 +44,7 @@ namespace Berzeker_1
             Damage = damagePoints;
             DefenseRating = Dice.GenerateRandomDice();
             HitChance = hitChance;
-            //HitChance.ChangeModifier(-(int)RaceOfUnit);
+            HitChance.ChangeRandomWeights(-(int)RaceOfUnit);
             HealthPoints = hp;
             CarryingCapacity = Dice.GenerateRandomDice().Roll();
         }
@@ -54,7 +54,7 @@ namespace Berzeker_1
             if (IsDead || enemy.IsDead)
                 return;
             Console.WriteLine(this + " is attempting to attack. Will it hit their target?");
-            if (HitChance.GetRandomInt() < 0)
+            if (HitChance.GetRandomInt() < HitChance.GetAverageRandom())
             {
                 Console.WriteLine(this + " missed!");
                 return;

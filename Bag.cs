@@ -18,6 +18,12 @@
             _deadItems = new List<int>();
             PopulateBag();
         }
+
+        public void ChangeRandomWeights(int weight)
+        {
+            
+        }
+
         public int GetAndRemoveRandomItemFromBag()
         {
             if(_items.Count == 0)
@@ -25,6 +31,11 @@
             int temp = _items[GetRandomInt()];
             _items.Remove(temp);
             return temp;
+        }
+
+        public int GetAverageRandom()
+        {
+            return (int)_items.Average();
         }
 
         public int GetRandomInt()

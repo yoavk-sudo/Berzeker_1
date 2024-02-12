@@ -22,7 +22,6 @@
             return amount;
         }
 
-
         public ArmyGeneral(string name, int resources, Races.Race race)
         {
             Name = name;
@@ -78,18 +77,27 @@
             TextWriter originalConsoleOut = Console.Out;
             Console.SetOut(TextWriter.Null);
             Dice damageDie = Dice.GenerateRandomDice();
+            Dice hit = Dice.GenerateRandomDice();
             int hp = Dice.GenerateRandomDice().Roll();
             if(unitOfRace.Name == nameof(ElementalArcher))
             {
                 int element = Random.Shared.Next(0, Enum.GetNames(typeof(ElementalArcher.Elements)).Length);
-                object[] elemntalConstructorParameters = {damageDie, hp, (ElementalArcher.Elements)Enum.ToObject(typeof(ElementalArcher.Elements), element) };
+                object[] elemntalConstructorParameters = {damageDie, hit, hp, (ElementalArcher.Elements)Enum.ToObject(typeof(ElementalArcher.Elements), element) };
                 Unit archer = (Unit)Activator.CreateInstance(unitOfRace, elemntalConstructorParameters);
                 if (archer == null) return;
                 Army.Add(archer);
                 Console.SetOut(originalConsoleOut);
                 return;
             }
-            object[] constructorParameters = { damageDie, hp };
+            if(unitOfRace.Name == nameof(MPoppins))
+            {
+                Bag bag = new(Random.Shared.Next(1, 100));
+                MPoppins mary = new(damageDie, hit, hp, bag);
+                Army.Add(mary);
+                Console.SetOut(originalConsoleOut);
+                return;
+            }
+            object[] constructorParameters = { damageDie, hit, hp };
             Unit soldier = (Unit)Activator.CreateInstance(unitOfRace, constructorParameters);
             if (soldier == null) return;
             Army.Add(soldier);

@@ -23,11 +23,10 @@ namespace Berzeker_1
         {
             if (CalculateChance(_critChance))
             {
-                //int tempDamage = Damage.Modifier;
-                //Damage.SetModifier(tempDamage * _critDamage);
+                Damage.ChangeRandomWeights(_critDamage);
                 Console.WriteLine($"{this} is aiming for {enemy}'s heart!");
-                //enemy.Defend(this, Damage.Roll());
-                //Damage.SetModifier(tempDamage);
+                enemy.Defend(this, Damage.GetRandomInt());
+                Damage.ChangeRandomWeights(-_critDamage);
                 return;
             }
             base.Attack(enemy);

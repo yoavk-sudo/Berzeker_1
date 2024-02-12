@@ -30,7 +30,7 @@ namespace Berzeker_1
             {
                 if (unit.IsDead)
                     continue;
-                //unit.Defend(this, Damage.Roll());
+                unit.Defend(this, Damage.GetRandomInt());
             }
         }
 

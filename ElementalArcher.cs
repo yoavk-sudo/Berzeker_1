@@ -25,10 +25,10 @@ namespace Berzeker_1
         {
             if (EnemyWeakToElement(enemy))
             {
-                //Damage.AddDice(1);
+                Damage.ChangeRandomWeights(+3);
                 Console.WriteLine("Attack was super effective!");
                 base.Attack(enemy);
-                //Damage.RemoveDice(1);
+                Damage.ChangeRandomWeights(-3);
             }
             base.Attack(enemy);
         }
@@ -43,36 +43,36 @@ namespace Berzeker_1
 
         public override void WeatherEffect(Weather weather)
         {
-            //HitChance.SetModifier(1);
-            //DefenseRating.SetModifier(1);
-            switch(weather)
+            HitChance.ChangeRandomWeights(1);
+            DefenseRating.ChangeRandomWeights(+1);
+            switch (weather)
             {
                 case Weather.Scorching:
                     if (_element != Elements.fire)
                     {
                         break;
                     }
-                    //Damage.ChangeModifier(+1);
+                    Damage.ChangeRandomWeights(+1);
                     return;
                 case Weather.Hail:
                     if (_element != Elements.ice)
                     {
                         break;
                     }
-                    //DefenseRating.ChangeModifier(+1);
+                    DefenseRating.ChangeRandomWeights(+1);
                     return;
                 case Weather.Cloudy:
                     if (_element != Elements.wind)
                     {
                         break;
                     }
-                    //HitChance.ChangeModifier(+1);
+                    HitChance.ChangeRandomWeights(+1);
                     return;
             }
-            // weather is clear or elements mismatch
-            //HitChance.SetModifier(-1);
-            //DefenseRating.SetModifier(-1);
-            //Damage.SetModifier(-1);
+            //weather is clear or elements mismatch
+            HitChance.ChangeRandomWeights(-1);
+            DefenseRating.ChangeRandomWeights(-1);
+            Damage.ChangeRandomWeights(-1);
         }
 
         public enum Elements

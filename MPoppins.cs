@@ -6,12 +6,13 @@ using System.Threading.Tasks;
 
 namespace Berzeker_1
 {
-    internal sealed class MPoppins : Unit
+    internal sealed class MPoppins : MagicUnit
     {
         private Bag _bag;
 
         private MPoppins(Dice damagePoints, Dice hitChance, int hp) : base(damagePoints, hitChance, hp)
         {
+            RaceOfUnit = Races.Race.elf;
         }
 
         public MPoppins(Dice damagePoints, Dice hitChance, int hp, Bag bag) : this(damagePoints, hitChance, hp)
@@ -23,7 +24,7 @@ namespace Berzeker_1
         {
             if(IsDead) return;
             int dmg = _bag.GetAndRemoveRandomItemFromBag();
-            Console.WriteLine("dmg is "+ dmg);
+            Console.WriteLine("Nanny's damage is "+ dmg);
             enemy.Defend(this, dmg);
         }
 
@@ -35,23 +36,6 @@ namespace Berzeker_1
                 return;
             }
             base.Defend(enemy, dmg);
-        }
-
-        public override void WeatherEffect(Weather weather)
-        {
-            switch (weather)
-            {
-                case Weather.ClearSkies:
-                    break;
-                case Weather.Cloudy:
-                    break;
-                case Weather.Scorching:
-                    break;
-                case Weather.Hail:
-                    break;
-                default:
-                    break;
-            }
         }
     }
 }

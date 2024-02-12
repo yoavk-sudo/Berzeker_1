@@ -23,10 +23,10 @@ namespace Berzeker_1
             switch (race)
             {
                 case Race.elf:
-                    selectedType = _elfUnitTypes[new Random().Next(_undeadUnitTypes.Count)];
+                    selectedType = _elfUnitTypes[new Random().Next(_elfUnitTypes.Count)];
                     break;
                 case Race.human:
-                    selectedType = _humanUnitTypes[new Random().Next(_undeadUnitTypes.Count)];
+                    selectedType = _humanUnitTypes[new Random().Next(_humanUnitTypes.Count)];
                     break;
                 case Race.undead:
                     selectedType = _undeadUnitTypes[new Random().Next(_undeadUnitTypes.Count)];
@@ -44,6 +44,7 @@ namespace Berzeker_1
                 case nameof(Wizard):
                 case nameof(ForestWarrior):
                 case nameof(ElementalArcher):
+                case nameof(MPoppins):
                     return Race.elf;
                 case nameof(Rogue):
                 case nameof(Barbarian):

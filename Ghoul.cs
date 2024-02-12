@@ -12,7 +12,7 @@ namespace Berzeker_1
         {
             AssignBaseStatsToUnit(damagePoints, hitChance, hp);
             RaceOfUnit = Races.Race.undead;
-            //Damage.SetModifier(hp);
+            Damage.ChangeRandomWeights(hp);
             HealthPoints = 5;
         }
     }

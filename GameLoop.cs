@@ -65,7 +65,8 @@ namespace Berzeker_1
             Console.WriteLine("Do you want the simulation to wait for your input between steps? (y/n)");
             
             char choice = Console.ReadKey().KeyChar;
-            if(choice == 'y' || choice == 'Y')
+            Console.WriteLine();
+            if (choice == 'y' || choice == 'Y')
             {
                 MainLoopLineStops(general1, general2);
                 return;

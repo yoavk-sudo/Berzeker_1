@@ -45,14 +45,6 @@ namespace Berzeker_1
             Range -= RANGEMODIFIERAMOUNT;
         }
 
-        public override void Attack(Unit enemy)
-        {
-            //int tempDamage = Damage.Roll();
-            //if (RaceOfUnit == Race.elf)  Damage.LastRollValue *= 2;
-            base.Attack(enemy);
-            //Damage = tempDamage;
-        }
-
         public override void Defend(Unit enemy, int dmg)
         {
             int enemyDamage = dmg;

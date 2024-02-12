@@ -17,39 +17,50 @@
             _items = new List<int>();
             _deadItems = new List<int>();
             PopulateBag();
+            Console.WriteLine(_items.Count);
+            Console.WriteLine(_deadItems.Count);
         }
 
+        /// <summary>
+        /// if weight is already present in bag, add another instance of it
+        /// </summary>
+        /// <param name="weight"></param>
         public void ChangeRandomWeights(int weight)
         {
-            
-        }
-
-        public int GetAndRemoveRandomItemFromBag()
-        {
-            if(_items.Count == 0)
-                _items = _deadItems;
-            int temp = _items[GetRandomInt()];
-            _items.Remove(temp);
-            return temp;
+            if(_deadItems.Contains(weight))
+            {
+                _items.Add(weight);
+                _deadItems.Add(weight);
+            }
         }
 
         public int GetAverageRandom()
         {
+            if(_items.Count == 0)
+                return 0;
             return (int)_items.Average();
         }
 
+        /// <summary>
+        /// returns item from bag, removes it. If bag is empty at the start, refills it.
+        /// </summary>
+        /// <returns></returns>
         public int GetRandomInt()
         {
-            return Random.Shared.Next(0, _items.Count);
+            if (_items.Count == 0)
+                _items = _deadItems;
+            int temp = _items[Random.Shared.Next(0, _items.Count - 1)];
+            _items.Remove(temp);
+            return temp;
         }
 
         private void PopulateBag()
         {
             for (int i = 0; i < _bagSize; i++)
             {
-                _items.Add(GetRandomInt());
+                _items.Add(Random.Shared.Next(200));
+                _deadItems.Add(_items[i]);
             }
-            _deadItems = _items;
         }
     }
 }

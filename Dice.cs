@@ -51,10 +51,6 @@ namespace Berzeker_1
                 Modifier == enemyDie.Modifier;
         }
 
-        /// <summary>
-        /// ///////////////////////////
-        /// </summary>
-        /// <returns></returns>
         public override int GetHashCode()
         {
             return ShiftAndWrap(Scalar,2) * ShiftAndWrap(BaseDie, 2) + Modifier.GetHashCode();
@@ -72,20 +68,12 @@ namespace Berzeker_1
             return BitConverter.ToInt32(BitConverter.GetBytes((number << positions) | wrapped), 0);
         }
 
-        /// <summary>
-        /// Set the modifier to a new interger value
-        /// </summary>
-        /// <param name="modifier"></param>
-        public void SetModifier(int modifier)
+        private void SetModifier(int modifier)
         {
             Modifier = modifier;
         }
 
-        /// <summary>
-        /// Increase or decrease modifier
-        /// </summary>
-        /// <param name="modifier"></param>
-        public void ChangeModifier(int modifier)
+        private void ChangeModifier(int modifier)
         {
             Modifier += modifier;
         }
@@ -118,16 +106,28 @@ namespace Berzeker_1
             return (int)(Scalar * BaseDie + Modifier) / 2;
         }
 
+        /// <summary>
+        /// Rolls Dice, returns result as int
+        /// </summary>
+        /// <returns></returns>
         public int GetRandomInt()
         {
             return Roll();
         }
 
+        /// <summary>
+        /// Change Dice modifier to be +weight
+        /// </summary>
+        /// <param name="weight"></param>
         public void ChangeRandomWeights(int weight)
         {
             ChangeModifier(weight);
         }
 
+        /// <summary>
+        /// return the average Dice roll as int
+        /// </summary>
+        /// <returns></returns>
         public int GetAverageRandom()
         {
             return AverageDiceRoll();

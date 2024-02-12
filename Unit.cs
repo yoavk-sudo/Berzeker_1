@@ -12,8 +12,9 @@ namespace Berzeker_1
         private char[] _projectName = "Berzerker_1.".ToCharArray();
         protected IRandomProvider _damage;
         protected int _loot;
+        private int _carryingCapacity = 2;
 
-        protected int CarryingCapacity { get; set; } = 2;
+        protected int CarryingCapacity { get => Math.Max(0, _carryingCapacity); set => _carryingCapacity = value; }
         public int Loot { get => _loot; set => _loot = Math.Clamp(value, 0, CarryingCapacity); }
         protected IRandomProvider HitChance { get; set; }
         protected IRandomProvider DefenseRating { get; set; }

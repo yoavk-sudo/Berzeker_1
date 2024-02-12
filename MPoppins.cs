@@ -23,16 +23,24 @@ namespace Berzeker_1
         public override void Attack(Unit enemy)
         {
             if(IsDead) return;
-            int dmg = _bag.GetAndRemoveRandomItemFromBag();
-            Console.WriteLine("Nanny's damage is "+ dmg);
+            if(HitChance.GetAverageRandom() <= _bag.GetAverageRandom())
+            {
+                Console.WriteLine(this + " missed.");
+                return;
+            }
+            int dmg = _bag.GetRandomInt();
+            Console.WriteLine(this + "'s damage is "+ dmg);
             enemy.Defend(this, dmg);
         }
 
         public override void Defend(Unit enemy, int dmg)
         {
-            if(dmg <= _bag.GetAndRemoveRandomItemFromBag())
+            int blockItem = _bag.GetRandomInt();
+            if (dmg <= blockItem)
             {
-                Console.WriteLine("Blocked");
+                Console.WriteLine(this + " pulled a penguin weighing " + blockItem + " kilos and used it block");
+                Console.WriteLine(this + "'s bag of cheats becomes even more unfair as she stuffs into it another fat penguin");
+                _bag.ChangeRandomWeights(blockItem);
                 return;
             }
             base.Defend(enemy, dmg);

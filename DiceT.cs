@@ -6,33 +6,50 @@ using System.Threading.Tasks;
 
 namespace Berzeker_1
 {
-    internal class Dice : IRandomProvider
+    internal class Dice<T> where T : IComparable<T>
     {
         private uint _scalar;
         private uint _baseDie;
         private int _modifier;
+        private T[] _diceValues;
 
         public uint Scalar { get => _scalar; set => _scalar = value; }
         public uint BaseDie { get => _baseDie; set => _baseDie = value; }
         public int Modifier { get => _modifier; set => _modifier = value; }
 
-        public Dice(uint numberOfDice, uint numberOfSidesPerDie, int modifier)
+        public Dice(uint numberOfDice, uint numberOfSidesPerDie, int modifier, T[] diceValues)
         {
             _scalar = numberOfDice;
             _baseDie = numberOfSidesPerDie;
             _modifier = modifier;
+            _diceValues = new T[DiceParameterAggregator()];
+            SetDice(diceValues);
         }
 
-        public int Roll()
+        private int DiceParameterAggregator()
         {
             int value = 0;
             for (int i = 0; i < Scalar; i++)
             {
-                value += (Random.Shared.Next((int)BaseDie) + 1);
+                value += (int)BaseDie;
             }
             value += Modifier;
-            Console.WriteLine($"Rolling {this}...\n{value}!");
             return value;
+        }
+
+        private void SetDice(T[] diceValues)
+        {
+            int length = Math.Min(_diceValues.Length, diceValues.Length);
+            for (int i = 0; i < length; i++)
+            {
+                _diceValues[i] = diceValues[i];
+            }
+        }
+
+        public T Roll()
+        {
+            int randomIndex = Random.Shared.Next(0, _diceValues.Length);
+            return _diceValues[randomIndex];
         }
 
         public override string ToString()
@@ -45,7 +62,7 @@ namespace Berzeker_1
         public override bool Equals(object? obj)
         {
             if (obj == null) return false;
-            if((obj is not Dice enemyDie)) { return false; }
+            if ((obj is not Dice enemyDie)) { return false; }
             return Scalar == enemyDie.Scalar &&
                 BaseDie == enemyDie.BaseDie &&
                 Modifier == enemyDie.Modifier;
@@ -53,7 +70,7 @@ namespace Berzeker_1
 
         public override int GetHashCode()
         {
-            return ShiftAndWrap(Scalar,2) * ShiftAndWrap(BaseDie, 2) + Modifier.GetHashCode();
+            return ShiftAndWrap(Scalar, 2) * ShiftAndWrap(BaseDie, 2) + Modifier.GetHashCode();
         }
 
         private int ShiftAndWrap(uint value, int positions)
@@ -82,7 +99,7 @@ namespace Berzeker_1
         {
             Scalar += (uint)Math.Abs(amount);
         }
-        
+
         public void RemoveDice(int amount)
         {
             Scalar -= (uint)Math.Abs(amount);
@@ -96,7 +113,7 @@ namespace Berzeker_1
             uint randomScalar = (uint)Random.Shared.Next(1, (int)scalar);
             uint randomBaseDie = (uint)Random.Shared.Next(1, (int)baseDie);
             int randomModifier = Random.Shared.Next(0, modifier);
-            if(Random.Shared.NextSingle() < 0.5f)
+            if (Random.Shared.NextSingle() < 0.5f)
                 randomModifier *= -1;
             return new Dice(randomScalar, randomBaseDie, randomModifier);
         }
@@ -110,7 +127,7 @@ namespace Berzeker_1
         /// Rolls Dice, returns result as int
         /// </summary>
         /// <returns></returns>
-        public int GetRandomInt()
+        public T GetRandomT()
         {
             return Roll();
         }
